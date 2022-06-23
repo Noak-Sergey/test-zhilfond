@@ -1,4 +1,3 @@
-import { Dispatch } from "redux";
 import { itemsAPI } from "../api/api";
 import { ItemType } from "../components/app/Item";
 import { AppThunk } from "./store";
@@ -40,13 +39,6 @@ export const setTotalItemsCountAC = (totalCount: number) => ({ type: SET_TOTAL_I
 export const setCurrentPageAC = (currentPage: number) => ({ type: SET_CURRENT_PAGE, currentPage } as const)
 
 //thunks
-// export const fetchItemsImgTC = () => {
-//     return async (dispatch: Dispatch<ActionsType>) => {
-//         let res = await itemsAPI.getImg()
-//         dispatch(setItemsAC(res.data))
-//         dispatch(setTotalItemsCountAC(res.data.length))
-//     }
-// }
 export const fetchItemsImgTC = ():AppThunk => {
     return async (dispatch) => {
         let res = await itemsAPI.getImg()

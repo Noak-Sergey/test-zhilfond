@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Modal } from "../common/modal/Modal";
+import { ModalChange } from "../common/modal/ModalChange";
+import { ModalDelete } from "../common/modal/ModalDelete";
 import "./Item.scss";
 
 export type ItemType = {
@@ -8,6 +9,7 @@ export type ItemType = {
     "title": string
     "url": string
     "thumbnailUrl": string
+    onDelete: () => void
 }
 
 type ItemPropsType = {
@@ -16,18 +18,20 @@ type ItemPropsType = {
 
 export const Item = (props: ItemPropsType) => {
 
-    const [show, setShow] = useState(false)
+    const [showModal, setShowModal] = useState(false)
+    const [showModalDel, setShowModalDel] = useState(false)
 
 
     return (
         <div className="item">
             <span>{props.item.albumId}</span>
             <div >
-                <img src={props.item.thumbnailUrl} alt="Photo" className="itemImg" />
+                <img src={props.item.thumbnailUrl} alt="Picture" className="itemImg" />
             </div>
-            <Modal onClose={() => setShow(false)} show={show} url={props.item.url} />
-            <button className="button" onClick={() => setShow(true)}>DELETE</button>
-            <button className="button" >CHANGE</button>
+            <ModalChange onClose={() => setShowModal(false)} show={showModal} url={props.item.url} />
+            <ModalDelete onDelete={props.item.onDelete} onClose={() => setShowModalDel(false)} show={showModalDel} url={props.item.url} />
+            <button className="button" onClick={() => setShowModalDel(true)}>DELETE</button>
+            <button className="button" onClick={() => setShowModal(true)}>CHANGE</button>
         </div>
     )
 }

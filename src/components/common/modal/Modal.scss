@@ -9,14 +9,24 @@
     align-items: center;
     justify-content: center;
     opacity: 0.9;
+
     .modal_content {
-        width: 600px;
-        height: 600px;
+        width: 400px;
+        height: 400px;
+
         .modal_footer {
             padding: 10px;
         }
     }
+
+    .modal_content p {
+        background-color: rgb(219, 221, 91);
+        color: rgb(177, 24, 24);
+        font-weight: 700;   
+    }
+
+    .modal_content img {
+        width: 400px;
+        height: 400px;
+    }
 }
-
-
-

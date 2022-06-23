@@ -1,20 +1,25 @@
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { useAppDispatch } from "../../redux/hooks"
-import { fetchItemsImgTC, setCurrentPageAC } from "../../redux/items-reducer"
+import { delCurrentItemAC, fetchItemsImgTC, setCurrentPageAC } from "../../redux/items-reducer"
 import { RootState } from "../../redux/store"
 import { Pagination } from "../common/pagination/Pagination"
 import { CustomSelect } from "../common/select/Select"
 import { Item, ItemType } from "./Item"
 
 export const Items = () => {
-  
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(fetchItemsImgTC())
   }, [])
-  
+
+  const deleteItem = (id: number) => {
+     dispatch(delCurrentItemAC(id))
+     console.log(`deleted item id: ${id}`)
+  }
+
 
   const allItems = useSelector<RootState, ItemType[]>(state => state.itemsPage.items)
   const pageSize = useSelector<RootState, number>(state => state.itemsPage.pageSize)
@@ -23,10 +28,10 @@ export const Items = () => {
 
   const arrAlbumId = allItems.map(i => i.albumId)
   const arrFilter = arrAlbumId.filter((item, pos) => arrAlbumId.indexOf(item) == pos)
-  
-   const arrToString = arrFilter.map(i => i.toString())  //при переводе этого массива чисел в строки, в useState value почему-то undefined
-   
-  const[value, onChangeOption] = useState<string>(arrToString[0]) //при первой загрузке value = undefined и не отображаются картинки, при выборе альбома картинки загружаются
+
+  const arrToString = arrFilter.map(i => i.toString())  //при переводе этого массива чисел в строки, в useState value почему-то undefined
+
+  const [value, onChangeOption] = useState<string>(arrToString[0]) //при первой загрузке value = undefined и не отображаются картинки, при выборе альбома картинки загружаются
 
   const onPageChanged = (pageNumber: number) => {
     dispatch(setCurrentPageAC(pageNumber))
@@ -38,18 +43,19 @@ export const Items = () => {
   const renderItemsImg = selectedItems.slice(0, sizeRender)
 
   return <div>
-      AlbumId : <CustomSelect
-                    options={arrToString}
-                    value={value}
-                    onChangeOption={onChangeOption}
-                />
+    AlbumId : <CustomSelect
+      options={arrToString}
+      value={value}
+      onChangeOption={onChangeOption}
+    />
     <div>
       {renderItemsImg.map(item => <Item key={item.id} item={{
         albumId: item.albumId,
         id: item.id,
         title: item.title,
         url: item.url,
-        thumbnailUrl: item.thumbnailUrl
+        thumbnailUrl: item.thumbnailUrl,
+        onDelete: () => deleteItem(item.id)
       }} />)}
     </div>
 

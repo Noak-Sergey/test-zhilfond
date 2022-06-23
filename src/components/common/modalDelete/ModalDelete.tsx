@@ -1,5 +1,5 @@
 import React from "react";
-import  "./Modal.scss"
+import "./ModalDelete.scss"
 
 type ModalDeletePropsType = {
     show: boolean
@@ -14,18 +14,18 @@ export const ModalDelete: React.FC<ModalDeletePropsType> = (props) => {
         return null
     }
 
-    const stopOnClick = (e: any) => e.stopPropagation() 
+    const stopOnClick = (e: any) => e.stopPropagation()
 
     return (
         //Привязал событие onClick за пределами модального окна
-        <div className="modal" onClick={props.onClose}>   
+        <div className="modal" onClick={props.onClose}>
             <div className="modal_content" onClick={stopOnClick}>
                 <p>Вы действительно хотите удалить данный контент?</p>
-                <img alt="waiting" src={props.url} />
-                <div className="modal_footer">
-                    <button onClick={props.onClose} className="button">Close</button>
-                    <button onClick={props.onDelete} className="button">Delete</button>
-                </div>
+                <img alt="picture" src={props.url} />
+
+                <button onClick={props.onClose} className="button">Close</button>
+                <button onClick={props.onDelete} className="button">Delete</button>
+
             </div>
         </div>
     )

@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { ModalChange } from "../common/modal/ModalChange";
-import { ModalDelete } from "../common/modal/ModalDelete";
+import { ModalChange } from "../common/modalChange/ModalChange";
+import { ModalDelete } from "../common/modalDelete/ModalDelete";
 import "./Item.scss";
 
 export type ItemType = {
-    "albumId": number
-    "id": number
-    "title": string
-    "url": string
-    "thumbnailUrl": string
+    albumId: number
+    id: number
+    title: string
+    url: string
+    thumbnailUrl: string
     onDelete: () => void
 }
 
@@ -28,8 +28,21 @@ export const Item = (props: ItemPropsType) => {
             <div >
                 <img src={props.item.thumbnailUrl} alt="Picture" className="itemImg" />
             </div>
-            <ModalChange onClose={() => setShowModal(false)} show={showModal} url={props.item.url} />
-            <ModalDelete onDelete={props.item.onDelete} onClose={() => setShowModalDel(false)} show={showModalDel} url={props.item.url} />
+            <ModalChange 
+                    onClose={() => setShowModal(false)} 
+                    show={showModal} 
+                    url={props.item.url} 
+                    albumId={props.item.albumId}
+                    id={props.item.id}
+                    title={props.item.title}
+                    thumbnailUrl={props.item.thumbnailUrl}/>
+
+            <ModalDelete 
+                    onDelete={props.item.onDelete} 
+                    onClose={() => setShowModalDel(false)} 
+                    show={showModalDel} 
+                    url={props.item.url} />
+
             <button className="button" onClick={() => setShowModalDel(true)}>DELETE</button>
             <button className="button" onClick={() => setShowModal(true)}>CHANGE</button>
         </div>

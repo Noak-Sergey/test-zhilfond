@@ -16,10 +16,9 @@ export const Items = () => {
   }, [])
 
   const deleteItem = (id: number) => {
-     dispatch(delCurrentItemAC(id))
-     console.log(`deleted item id: ${id}`)
+    dispatch(delCurrentItemAC(id))
+    console.log(`deleted item id: ${id}`)
   }
-
 
   const allItems = useSelector<RootState, ItemType[]>(state => state.itemsPage.items)
   const pageSize = useSelector<RootState, number>(state => state.itemsPage.pageSize)
@@ -29,9 +28,9 @@ export const Items = () => {
   const arrAlbumId = allItems.map(i => i.albumId)
   const arrFilter = arrAlbumId.filter((item, pos) => arrAlbumId.indexOf(item) == pos)
 
-  const arrToString = arrFilter.map(i => i.toString())  //при переводе этого массива чисел в строки, в useState value почему-то undefined
+  const arrToString = arrFilter.map(i => i.toString()) 
 
-  const [value, onChangeOption] = useState<string>(arrToString[0]) //при первой загрузке value = undefined и не отображаются картинки, при выборе альбома картинки загружаются
+  const [value, onChangeOption] = useState<string>(arrToString[0]) 
 
   const onPageChanged = (pageNumber: number) => {
     dispatch(setCurrentPageAC(pageNumber))

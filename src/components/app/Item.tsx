@@ -10,6 +10,7 @@ export type ItemType = {
     url: string
     thumbnailUrl: string
     onDelete: () => void
+    changeTitle: (id: number, newValue: string, albumId: number) => void
 }
 
 type ItemPropsType = {
@@ -35,7 +36,9 @@ export const Item = (props: ItemPropsType) => {
                     albumId={props.item.albumId}
                     id={props.item.id}
                     title={props.item.title}
-                    thumbnailUrl={props.item.thumbnailUrl}/>
+                    thumbnailUrl={props.item.thumbnailUrl}
+                    changeTitle={props.item.changeTitle}/>
+                    
 
             <ModalDelete 
                     onDelete={props.item.onDelete} 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { useAppDispatch } from "../../redux/hooks"
-import { delCurrentItemAC, fetchItemsImgTC, setCurrentPageAC } from "../../redux/items-reducer"
+import { delCurrentItemAC, fetchItemsImgTC, setCurrentPageAC, setNewTitleItemAC } from "../../redux/items-reducer"
 import { RootState } from "../../redux/store"
 import { Pagination } from "../common/pagination/Pagination"
 import { CustomSelect } from "../common/select/Select"
@@ -18,6 +18,10 @@ export const Items = () => {
   const deleteItem = (id: number) => {
     dispatch(delCurrentItemAC(id))
     console.log(`deleted item id: ${id}`)
+  }
+
+  const changeTitle = (id: number, newValue: string, albumId: number) => {
+    dispatch(setNewTitleItemAC(id, newValue, albumId))
   }
 
   const allItems = useSelector<RootState, ItemType[]>(state => state.itemsPage.items)
@@ -54,7 +58,8 @@ export const Items = () => {
         title: item.title,
         url: item.url,
         thumbnailUrl: item.thumbnailUrl,
-        onDelete: () => deleteItem(item.id)
+        onDelete: () => deleteItem(item.id),
+        changeTitle: changeTitle
       }} />)}
     </div>
 
